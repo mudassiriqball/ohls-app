@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "433308480952",
+    "firebase_url": "https://olhs-2693e-default-rtdb.firebaseio.com",
+    "project_id": "olhs-2693e",
+    "storage_bucket": "olhs-2693e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433308480952:android:efe93f7f87f04796a78b4d",
+        "android_client_info": {
+          "package_name": "com.mudassiriqball.ohlsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "433308480952-he4qlqhdnjjc3oeanilk26e2hboc4665.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mudassiriqball.ohlsapp",
+            "certificate_hash": "3b0f010ec8dd7401151b98d17cf0cccda9f5fb3e"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF0uOZHYOd9_Tagy75uDL-1z-5mxmM8nU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
