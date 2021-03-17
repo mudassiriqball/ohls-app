@@ -14,3 +14,4 @@ App apk link: https://1drv.ms/u/s!AuxPil5kslEJk2EvBKC3RJd9-Dm5?e=pgaVCi
 1) Social Logins (Google, Fb)
 3) Login/Regiter using email
 4) Live Chat with ability to share images, files(pdf, docs, etc)
+5) Push Notifications
