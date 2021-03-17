@@ -7,8 +7,9 @@
 4) MongoDb
 5) Cloudinary (Images STorage)
 6) Firebase Cloud Messaging
+7) Firebase Firestore
 
 Features:
 1) Social Logins (Google, Fb)
 3) Login/Regiter using email
-4) Live Chat
+4) Live Chat with ability to share images, files(pdf, docs, etc)
