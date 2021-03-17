@@ -163,10 +163,11 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     loginContainer: {
-        marginTop: STATUSBAR_HEIGHT + 100,
+        marginTop: STATUSBAR_HEIGHT,
         backgroundColor: theme.COLORS.WHITE,
         margin: theme.SIZES.BASE,
-        padding: theme.SIZES.BASE,
+        paddingHorizontal: theme.SIZES.BASE,
+        paddingBottom: theme.SIZES.BASE * 3,
         shadowColor: theme.COLORS.BLACK,
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 5,

@@ -1,85 +1,132 @@
 import React, { useState, useEffect, useLayoutEffect, useCallback } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { Loading } from '../../components';
-import theme from '../../constants/theme';
-
+import { useTheme } from '@react-navigation/native';
+import firebase from '../../utils/firebase';
 import 'firebase/firestore';
-import urls from '../../utils/urls';
-import axios from 'axios';
-import { Avatar } from 'react-native-paper';
+import { Avatar, Badge, FAB } from 'react-native-paper';
+import Loading from '../../components/Loading';
+import theme from '../../constants/theme';
+import { ScrollView } from 'react-native'
 
 export default function Chats(props) {
-    const { navigation, route, user } = props;
-
+    const { navigation, user } = props;
+    const [chatUser, setchatUser] = useState({ _id: '', fullName: '' })
+    useEffect(() => {
+        if (user) {
+            setchatUser(user);
+        }
+        return () => {
+        }
+    }, [user]);
 
     const [isLoading, setisLoading] = useState(false);
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        getUsers();
-    }, []);
+        if (chatUser._id !== '') {
+            try {
+                setisLoading(true);
+                firebase
+                    .database()
+                    .ref('users')
+                    .on('value', (dataSnapshot) => {
+                        let arr = [];
+                        dataSnapshot && dataSnapshot.forEach((child) => {
+                            let sender = child.val().sender;
+                            let receiver = child.val().receiver;
 
-    const getUsers = async () => {
-        setisLoading(true);
-        axios({
-            method: 'GET',
-            url: urls.ALL_APPROVED_LAWYERS,
-        }).then(res => {
-            setUsers(res.data.data);
-            setisLoading(false);
-        }).catch(err => {
-            console.log('err:', err)
-            setisLoading(false);
-        })
-    }
+                            if (sender._id === chatUser._id) {
+                                let count = 0;
+                                firebase
+                                    .database()
+                                    .ref('chats')
+                                    .child(sender._id > receiver._id ? sender._id : receiver._id)
+                                    .child(sender._id > receiver._id ? receiver._id : sender._id)
+                                    .on('value', (dataSnapshot) => {
+                                        dataSnapshot && dataSnapshot.forEach((child) => {
+                                            if (child.val().received === false && child.val().user._id !== sender._id) {
+                                                count++;
+                                            }
+                                        });
+                                    })
+                                arr.push({ user: receiver, isNew: count });
+                            } else if (receiver._id === chatUser._id) {
+                                let count = 0;
+                                firebase
+                                    .database()
+                                    .ref('chats')
+                                    .child(sender._id > receiver._id ? sender._id : receiver._id)
+                                    .child(sender._id > receiver._id ? receiver._id : sender._id)
+                                    .on('value', (dataSnapshot) => {
+                                        dataSnapshot && dataSnapshot.forEach((child) => {
+                                            if (child.val().received === false && child.val().user._id !== receiver._id) {
+                                                count++;
+                                            }
+                                        });
+                                    })
+                                arr.push({ user: sender, isNew: count });
+                            }
+                        });
+                        setUsers(arr.reverse());
+                        setisLoading(false);
+                    })
+            } catch (err) {
+                setisLoading(false);
+                console.log('Loading chat error:', err);
+            }
+        }
+        return () => { }
+    }, [chatUser]);
+
+    useEffect(() => {
+        return () => { }
+    }, [users]);
 
     return (
-        <View style={styles.container}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1, padding: theme.SIZES.BASE }}>
             {isLoading ?
                 <Loading />
                 :
                 users && users.map((element, index) => (
                     <TouchableOpacity key={index}
-                        onPress={() => navigation.navigate('ChatScreen', { user: user, lawyer: element })}
+                        onPress={() => navigation.navigate('ChatScreen', { sender: chatUser, receiver: element.user })}
                         style={styles.userContaier}
                     >
                         <View style={styles.avatarContainer}>
-                            {element && element.avatar ?
-                                <Avatar.Image size={50} source={{ uri: element.avatar }} />
-                                :
-                                <View style={styles.txtAvatar}>
-                                    <Text style={{ color: theme.COLORS.WHITE }}>{element && element.fullName.substring(0, 2).toUpperCase()}</Text>
-                                </View>
-                            }
+                            <View style={styles.txtAvatar}>
+                                <Text style={{ color: theme.COLORS.WHITE, fontSize: 18 }}>{element && element.user.fullName && element.user.fullName.substring(0, 2).toUpperCase()}</Text>
+                            </View>
+                            {element.isNew > 0 && <Badge style={{ position: 'absolute', }}>{element.isNew}</Badge>}
                         </View>
                         <View style={styles.txtContainer}>
-                            <Text style={{ color: theme.COLORS.TEXT, fontSize: 16, fontWeight: 'bold' }}>{element && element.fullName}</Text>
+                            <Text style={{ color: theme.COLORS.TEXT, fontSize: 14, fontWeight: 'bold' }}>{element && element.user.fullName}</Text>
                         </View>
                     </TouchableOpacity>
                 ))
             }
-        </View>
+            <FAB
+                style={styles.fab}
+                icon="message-bulleted"
+                color={theme.COLORS.WHITE}
+                onPress={() => navigation.navigate('NewChat')}
+            />
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: theme.COLORS.WHITE,
-        padding: theme.SIZES.BASE
-    },
     userContaier: {
         flexDirection: 'row',
-        padding: 10,
-
+        padding: 5,
     },
     avatarContainer: {
         width: '20%',
-        marginBottom: 10
     },
     txtContainer: {
         borderBottomColor: theme.COLORS.SHADOW,
         borderBottomWidth: 1,
         width: '80%',
+        justifyContent: 'center',
+        paddingLeft: 20,
     },
     txtAvatar: {
         width: 50,
@@ -87,7 +134,16 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         backgroundColor: theme.COLORS.PRIMARY,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+    },
+    fab: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        backgroundColor: theme.COLORS.PRIMARY,
+        bottom: 0,
     },
 })
+
+
 

@@ -22,13 +22,12 @@ import Constants from 'expo-constants';
 import { removeTokenFromStorage } from '../utils/auth';
 import { AntDesign } from '@expo/vector-icons';
 
-
 const CustomSidebarMenu = (props) => {
-  const { user, isLogged, navigation, setIsLogged, setUser } = props;
+  const { user, token, isLogged, navigation, setIsLogged, setUser } = props;
   const logout = () => {
     setIsLogged(false);
     setUser(null);
-    removeTokenFromStorage(navigation);
+    removeTokenFromStorage(navigation, user._id);
   }
 
   return (

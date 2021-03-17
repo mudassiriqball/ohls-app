@@ -3,6 +3,11 @@ import jwt_decode from "jwt-decode";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CommonActions } from "@react-navigation/native";
 
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
+import urls from "./urls";
+import axios from "axios";
+
 const auth = () => (
     <></>
 )
@@ -12,6 +17,21 @@ export async function saveTokenToStorage(_token, navigation, getUser) {
         await AsyncStorage.setItem('bearer_token', _token);
         await AsyncStorage.setItem('decoded_token', JSON.stringify(jwt_decode(_token)));
         getUser();
+        const decoded_token = await jwt_decode(_token);
+        if (Constants.isDevice) {
+            const device_token = (await Notifications.getExpoPushTokenAsync()).data;
+            await axios({
+                method: 'PUT',
+                headers: {
+                    'authorization': _token
+                },
+                url: urls.UPDATE_PROFILE + decoded_token.data._id,
+                data: { fcmToken: device_token },
+            }).then(res => {
+            }).catch(err => {
+                console.log('saveFcmToken Error:', err);
+            })
+        }
         navigation.dispatch(
             CommonActions.reset({
                 index: 1,
@@ -33,7 +53,21 @@ export async function getBearerTokenFromStorage() {
     }
 }
 
-export async function removeTokenFromStorage(navigation) {
+export async function removeTokenFromStorage(navigation, _id) {
+    const token = await getBearerTokenFromStorage();
+    await axios({
+        method: 'PUT',
+        headers: {
+            'authorization': token
+        },
+        url: urls.UPDATE_PROFILE + _id,
+        params: { fcmToken: '' },
+    }).then(res => {
+
+    }).catch(err => {
+        console.log('removeFcmToken Error:', err);
+    })
+
     try {
         await AsyncStorage.clear();
         navigation.dispatch(

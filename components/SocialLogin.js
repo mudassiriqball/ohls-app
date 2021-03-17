@@ -67,10 +67,9 @@ export default function SocialLogin(props) {
         setIsLoading(true);
         try {
             const { type, accessToken, user } = await Google.logInAsync({
-                // androidStandaloneAppClientId: ids.GOOGLE_CLIENT_ID,
+                androidStandaloneAppClientId: ids.androidStandaloneAppClientId,
                 androidClientId: ids.GOOGLE_CLIENT_ID,
                 scopes: ['profile', 'email'],
-                behavior: 'web'
             });
             if (type === 'success') {
                 let userInfoResponse = await fetch('https://www.googleapis.com/userinfo/v2/me', {

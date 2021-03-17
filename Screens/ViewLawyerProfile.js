@@ -212,24 +212,14 @@ const Chat = props => {
                     navigation.navigate('Chats', {
                         screen: 'ChatScreen',
                         params: {
-                            lawyer: lawyer,
-                            user: user
+                            sender: user,
+                            receiver: lawyer,
                         }
                     })
             }
         />
     )
 }
-
-// navigation.navigate(
-//     'Chats',
-//     {
-//         screen: 'ChatScreen',
-//         params: {
-//             lawyer: lawyer,
-//             user: user
-//         }
-//     })
 
 const styles = StyleSheet.create({
     list: {

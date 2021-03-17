@@ -26,7 +26,14 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.mudassiriqball.ohlsapp"
+      "package": "com.mudassiriqball.ohlsapp",
+      "googleServicesFile": "./utils/google-services.json",
+      "config": {
+        "googleSignIn": {
+          "apiKey": "AIzaSyC1axFMY2Nk3EiCo_0eBUstEpWnWQ3HhGE",
+          "certificateHash": "3B:0F:01:0E:C8:DD:74:01:15:1B:98:D1:7C:F0:CC:CD:A9:F5:FB:3E"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

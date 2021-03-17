@@ -1,74 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native'
-import { Bubble, Composer, GiftedChat, InputToolbar, SystemMessage } from 'react-native-gifted-chat';
+import React, { useState, useEffect, useRef } from 'react';
+import { StyleSheet, View } from 'react-native'
+import { GiftedChat } from 'react-native-gifted-chat';
+import { EasyToast, Loading } from '../../components';
+import firebase from '../../utils/firebase';
+import 'firebase/firestore';
+import { onLongPress, renderActions, renderAvatar, renderBubble, renderLoading, renderMessageImage, renderSend, renderSystemMessage, scrollToBottomComponent } from '../../components/ChatStuff';
+import theme from '../../constants/theme';
+import sendPushNotification from '../../hooks/PushNotifications/sendPushNotification';
 import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import * as FileSystem from 'expo-file-system';
-import firebase from '../../utils/firebase';
-import { Loading } from '../../components';
-import theme from '../../constants/theme';
-import 'firebase/firestore';
-import { Entypo, Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import moment from 'moment';
-import { Avatar, IconButton } from 'react-native-paper';
-import CustomView from './CustomView';
+import * as Sharing from "expo-sharing";
+import * as MediaLibrary from 'expo-media-library';
 
-export default function ChatScreen(props) {
-    const { navigation } = props;
-
-    const [user, setUser] = useState(null);
-    const [lawyer, setLawyer] = useState(null);
+export default function ChatSCreen(props) {
+    const { token } = props;
+    const [sendLoading, setsendLoading] = useState(false);
+    const [sender, setSender] = useState({ _id: '', fullName: '', fcmToken: '' });
+    const [receiver, setReceiver] = useState({ _id: '', fullName: '', fcmToken: '' });
     const [isLoading, setisLoading] = useState(false);
     const [messages, setMessages] = useState([]);
+    const [imgDownloadLoading, setimgDownloadLoading] = useState(false);
+    const toastRef = useRef();
+    const successToastRef = useRef();
 
-    const [file, setFile] = useState(null);
-
+    // Hide Bottom Tabbar
     useEffect(() => {
-        if (props.route && props.route.params && props.route.params.user && props.route.params.lawyer) {
-            props.navigation.setOptions({
-                headerTitle: props.route.params.lawyer.fullName
-            })
-            setUser(props.route.params.user);
-            setLawyer(props.route.params.lawyer);
-        }
-        return () => {
-        }
+        const parent = props.navigation.dangerouslyGetParent();
+        parent.setOptions({
+            tabBarVisible: false,
+        });
+        return () =>
+            parent.setOptions({
+                tabBarVisible: true,
+            });
     }, []);
-
-    useEffect(() => {
-        if (messages.length > 0)
-            setisLoading(false)
-        return () => { }
-    }, [messages]);
-
-    useEffect(() => {
-        if (user && lawyer) {
-            setisLoading(true);
-            try {
-                firebase
-                    .database()
-                    .ref('chats')
-                    .child(user && user._id)
-                    .child(lawyer && lawyer._id)
-                    .on('value', (dataSnapshot) => {
-                        let msgs = [];
-                        dataSnapshot && dataSnapshot.forEach((child) => {
-                            msgs.push({ ...child.val(), createdAt: JSON.parse(child.val().createdAt) });
-                        });
-                        setMessages(msgs.reverse());
-                        setisLoading(false);
-                    })
-            } catch (err) {
-                setisLoading(false);
-                console.log('Loading chat error:', err);
-            }
-        }
-        return () => {
-        }
-    }, [user, lawyer])
-
 
     useEffect(() => {
         getPermissionAsync();
@@ -82,37 +51,181 @@ export default function ChatScreen(props) {
             }
         }
     };
+    useEffect(() => {
+        if (props.route && props.route.params && props.route.params.sender && props.route.params.receiver) {
+            props.navigation.setOptions({ title: props.route.params.receiver.fullName })
+            setSender(props.route.params.sender);
+            setReceiver(props.route.params.receiver);
+        }
+        return () => {
+        }
+    }, [props.route]);
+
+    useEffect(() => {
+        if (sender._id !== '' && receiver._id !== '') {
+            setisLoading(true);
+            try {
+                firebase
+                    .database()
+                    .ref('chats')
+                    .child(sender._id > receiver._id ? sender._id : receiver._id)
+                    .child(sender._id > receiver._id ? receiver._id : sender._id)
+                    .on('value', (dataSnapshot) => {
+                        let msgs = [];
+                        dataSnapshot && dataSnapshot.forEach((child) => {
+                            msgs.push({ ...child.val(), createdAt: JSON.parse(child.val().createdAt), key: child.key });
+                            try {
+                                if (sender._id === child.val().receiver._id) {
+                                    setMerkAsRead(child.key);
+                                }
+                            } catch (error) {
+                            }
+                        });
+                        setMessages(msgs.reverse());
+                        setisLoading(false);
+                    })
+            } catch (err) {
+                setisLoading(false);
+                console.log('Loading chat error:', err);
+            }
+        }
+        return () => {
+        }
+    }, [sender, receiver]);
+
+    useEffect(() => {
+        if (messages.length > 0) {
+            setisLoading(false);
+        }
+        return () => { }
+    }, [messages]);
+
+    async function setMerkAsRead(msg) {
+        let msgsRef = firebase
+            .database()
+            .ref('chats')
+            .child(sender._id > receiver._id ? sender._id : receiver._id)
+            .child(sender._id > receiver._id ? receiver._id : sender._id)
+            .child(msg)
+        msgsRef.update({ received: true });
+    }
+
+    async function handleSend(msg) {
+        try {
+            setsendLoading(true);
+            await firebase
+                .database()
+                .ref('chats')
+                .child(sender._id > receiver._id ? sender._id : receiver._id)
+                .child(sender._id > receiver._id ? receiver._id : sender._id)
+                .push({
+                    _id: msg[0]._id,
+                    createdAt: JSON.stringify(msg[0].createdAt),
+                    text: msg[0].text,
+                    sent: true,
+                    received: false,
+                    receiver: {
+                        _id: receiver._id,
+                        fullName: receiver.fullName,
+                    },
+                    user: {
+                        _id: sender._id,
+                        fullName: sender.fullName,
+                    }
+                })
+            setsendLoading(false);
+            if (messages.length < 1) {
+                firebase
+                    .database()
+                    .ref('users')
+                    .push({
+                        sender: {
+                            _id: sender._id,
+                            fullName: sender.fullName,
+                        },
+                        receiver: {
+                            _id: receiver._id,
+                            fullName: receiver.fullName,
+                        }
+                    });
+            }
+            sendPushNotification(
+                token,
+                receiver._id,
+                `New message from ${sender.fullName}`,
+                msg[0].text,
+                sender
+            )
+        } catch (err) {
+            setsendLoading(false);
+            console.log('snd msg err:', err);
+        }
+    }
+
     const pickDocument = async () => {
         let result = await DocumentPicker.getDocumentAsync({
             type: '*/*',
             copyToCacheDirectory: true,
-            base64: true,
             multiple: false,
         });
         if (result.type === 'success') {
+            let fileBase64 = await FileSystem.readAsStringAsync(result.uri, { encoding: 'base64' });
             try {
-                const content = await FileSystem.readAsStringAsync(result.uri);
+                setsendLoading(true);
                 const formatedDate = moment(new Date(), "MM-DD-YYYY HH:mm:ss");
-                debugger
                 await firebase
                     .database()
-                    .ref('chats/' + user._id)
-                    .child(lawyer && lawyer._id)
+                    .ref('chats')
+                    .child(sender._id > receiver._id ? sender._id : receiver._id)
+                    .child(sender._id > receiver._id ? receiver._id : sender._id)
                     .push({
                         _id: JSON.stringify((new Date()).valueOf()),
                         createdAt: JSON.stringify(formatedDate._d),
-                        file: JSON.stringify(content),
+                        file: fileBase64,
+                        sent: true,
                         name: result.name,
-                        user: {
-                            _id: user._id,
-                            name: user.fullName,
+                        received: false,
+                        receiver: {
+                            _id: receiver._id,
+                            fullName: receiver.fullName,
                         },
+                        user: {
+                            _id: sender._id,
+                            fullName: sender.fullName,
+                        }
                     })
+                if (messages.length < 1) {
+                    firebase
+                        .database()
+                        .ref('users')
+                        .push({
+                            sender: {
+                                _id: sender._id,
+                                fullName: sender.fullName,
+                            },
+                            receiver: {
+                                _id: receiver._id,
+                                fullName: receiver.fullName,
+                            }
+                        });
+                }
+                sendPushNotification(
+                    token,
+                    receiver._id,
+                    `New message from ${sender.fullName}`,
+                    `File: ${result.name}`,
+                    sender
+                )
+                setsendLoading(false);
             } catch (err) {
-                debugger
+                console.log('pickDocument err:', err)
+                setsendLoading(false);
+                toastRef && toastRef.current && toastRef.current.show('Message send failed, Please try again later.', 2000, () => { });
             }
+            setsendLoading(false);
         }
     }
+
     const takePhoto = async () => {
         const { status: cameraPerm } = await Permissions.askAsync(Permissions.CAMERA);
         const { status: cameraRollPerm } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -124,131 +237,177 @@ export default function ChatScreen(props) {
                 quality: 1,
                 base64: true
             });
-            debugger
             if (!result.cancelled) {
-                try {
-                    const formatedDate = moment(new Date(), "MM-DD-YYYY HH:mm:ss");
-                    await firebase
-                        .database()
-                        .ref('chats/' + user._id)
-                        .child(lawyer && lawyer._id)
-                        .push({
-                            _id: JSON.stringify((new Date()).valueOf()),
-                            createdAt: JSON.stringify(formatedDate._d),
-                            image: `data:image/jpg;base64,${result.base64}`,
-                            user: {
-                                _id: user._id,
-                                name: user.fullName,
-                            },
-                        })
-                } catch (err) {
-                    console.log('snd msg err:', err);
+                setsendLoading(true);
+                let secure_url = '';
+                let uploaded = false;
+                let data = {
+                    "file": `data:image/jpg;base64,${result.base64}`,
+                    "upload_preset": "ml_default",
+                }
+                await fetch('https://api.cloudinary.com/v1_1/dsexrbwj1/image/upload', {
+                    body: JSON.stringify(data),
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    method: 'POST',
+                }).then(async res => {
+                    let data = await res.json()
+                    secure_url = data.url;
+                    uploaded = true
+                }).catch(err => {
+                    toastRef && toastRef.current && toastRef.current.show('Message send failed, Please try again later.', 2000, () => { });
+                    setsendLoading(false);
+                })
+                if (uploaded) {
+                    try {
+                        const formatedDate = moment(new Date(), "MM-DD-YYYY HH:mm:ss");
+                        const name = result.uri.split("/").reverse()[0];
+                        await firebase
+                            .database()
+                            .ref('chats')
+                            .child(sender._id > receiver._id ? sender._id : receiver._id)
+                            .child(sender._id > receiver._id ? receiver._id : sender._id)
+                            .push({
+                                _id: JSON.stringify((new Date()).valueOf()),
+                                createdAt: JSON.stringify(formatedDate._d),
+                                image: secure_url,
+                                name: name,
+                                sent: true,
+                                received: false,
+                                receiver: {
+                                    _id: receiver._id,
+                                    fullName: receiver.fullName,
+                                },
+                                user: {
+                                    _id: sender._id,
+                                    fullName: sender.fullName,
+                                }
+                            });
+                        if (messages.length < 1) {
+                            firebase
+                                .database()
+                                .ref('users')
+                                .push({
+                                    sender: {
+                                        _id: sender._id,
+                                        fullName: sender.fullName,
+                                    },
+                                    receiver: {
+                                        _id: receiver._id,
+                                        fullName: receiver.fullName,
+                                    }
+                                });
+                        }
+                        sendPushNotification(
+                            token,
+                            receiver._id,
+                            `New message from ${sender.fullName}`,
+                            `Send you a photo: ${name}`,
+                            sender
+                        )
+                        setsendLoading(false);
+                    } catch (err) {
+                        setsendLoading(false);
+                        toastRef && toastRef.current && toastRef.current.show('Message send failed, Please try again later.', 2000, () => { });
+                        console.log('snd msg err:', err);
+                    }
                 }
             }
         }
     };
 
-    async function handleSend(msg) {
-        try {
-            await firebase
-                .database()
-                .ref('chats/' + user._id)
-                .child(lawyer && lawyer._id)
-                .push({
-                    _id: msg[0]._id,
-                    createdAt: JSON.stringify(msg[0].createdAt),
-                    text: msg[0].text,
-                    user: {
-                        _id: user._id,
-                        name: user.fullName,
-                    },
-                })
-        } catch (err) {
-            console.log('snd msg err:', err);
-        }
+    async function deleteMessage(message) {
+        let userRef = firebase
+            .database()
+            .ref('chats')
+            .child(sender._id > receiver._id ? sender._id : receiver._id)
+            .child(sender._id > receiver._id ? receiver._id : sender._id)
+            .child(message.key)
+        userRef.remove();
     }
 
-    const renderActions = () => {
-        return (
-            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
-                <Ionicons name="document-attach-outline" onPress={pickDocument} size={25} style={{ marginRight: 7, marginLeft: 14 }} color={theme.COLORS.GRAY} />
-                <MaterialIcons name="add-a-photo" onPress={takePhoto} size={25} style={{ marginHorizontal: 7 }} color={theme.COLORS.GRAY} />
-            </View>
-        );
-    }
-    const renderBubble = props => {
-        return (
-            <Bubble
-                {...props}
-                wrapperStyle={{
-                    right: { backgroundColor: theme.COLORS.PRIMARY },
-                }}
-            />
-        );
-    }
-    const renderAvatar = props => {
-        return (
-            props.currentMessage.user._id === user._id ?
-                null
-                :
-                <Avatar.Image source={{ uri: lawyer.avatar }} size={35} />
-        );
-    }
-    function scrollToBottomComponent() {
-        return (
-            <View style={styles.bottomComponentContainer}>
-                <Feather icon='chevron-down' size={36} color='red' />
-            </View>
-        );
-    }
-    function renderLoading() {
-        return (
-            <View style={styles.loadingContainer}>
-                <ActivityIndicator size='large' color='#6646ee' />
-            </View>
-        );
-    }
-    function renderSystemMessage(props) {
-        return (
-            <CustomView
-                {...props}
-            />
-        );
-    }
-    function onLongPress(props) {
-        firebase
-            .database()
-            .ref('chats/' + user._id)
-            .child(lawyer && lawyer._id).where("_id", "==", props.currentMessage._id).get()
-            .then(querySnapshot => {
-                querySnapshot.docs[0].ref.delete();
+    const downloadImage = async message => {
+        setimgDownloadLoading(true);
+        FileSystem.downloadAsync(
+            message.image,
+            FileSystem.documentDirectory + message.name
+        ).then(({ uri }) => {
+            MediaLibrary.createAssetAsync(uri).then(asset => {
+                MediaLibrary.createAlbumAsync('OLHS', asset)
+                    .then(() => {
+                        setimgDownloadLoading(false);
+                        successToastRef && successToastRef.current && successToastRef.current.show('Image downloaded successfully.', 2000, () => { });
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        toastRef && toastRef.current && toastRef.current.show('Image download failed, Please try again later.', 2000, () => { });
+                    });
             });
+        }).catch(error => {
+            setimgDownloadLoading(false);
+            console.error(error);
+            toastRef && toastRef.current && toastRef.current.show('Image download failed, Please try again later.', 2000, () => { });
+        });
+    }
+
+    const downloadFile = async message => {
+        try {
+            setimgDownloadLoading(true);
+            let fileName = FileSystem.documentDirectory + message.name;
+            FileSystem.writeAsStringAsync(
+                fileName,
+                message.file, {
+                encoding: FileSystem.EncodingType.Base64,
+            })
+            await MediaLibrary.createAssetAsync(fileName).then(asset => {
+                MediaLibrary.createAlbumAsync('OLHS', asset)
+                    .then(() => {
+                        setimgDownloadLoading(false);
+                        successToastRef && successToastRef.current && successToastRef.current.show('File downloaded successfully.', 2000, () => { });
+                    })
+                    .catch(error => {
+                        console.error(error);
+                        toastRef && toastRef.current && toastRef.current.show('File download failed, Please try again later.', 2000, () => { });
+                    });
+            });
+        } catch (err) {
+            setimgDownloadLoading(false);
+        }
     }
 
     return (
         <View style={styles.container}>
+            <EasyToast
+                toastRef={toastRef}
+                type={'err'}
+                position={'top'}
+            />
+            <EasyToast
+                toastRef={successToastRef}
+                type={'success'}
+                position={'top'}
+            />
             {isLoading ?
                 <Loading />
                 :
                 <GiftedChat
                     messages={messages}
                     user={{
-                        _id: user && user._id,
-                        name: user && user.fullName,
+                        _id: sender._id,
+                        name: sender.fullName
                     }}
-                    onLongPress={onLongPress}
+                    renderMessageImage={(props) => renderMessageImage(props, sender, receiver)}
+                    onLongPress={(context, message) => onLongPress(context, message, deleteMessage, downloadFile, downloadImage)}
                     maxInputLength={1000}
-                    renderAvatar={renderAvatar}
                     onSend={handleSend}
-                    renderActions={renderActions}
-                    bottomOffset={20}
-                    renderUsernameOnMessage={true}
+                    renderSend={(props) => renderSend(props, sendLoading)}
+                    renderActions={() => renderActions(pickDocument, takePhoto)}
                     renderLoading={renderLoading}
                     renderBubble={renderBubble}
                     isLoadingEarlier={true}
-                    renderLoading={() => <Loading />}
                     scrollToBottomComponent={scrollToBottomComponent}
-                    renderCustomView={renderSystemMessage}
+                    renderCustomView={(props) => renderSystemMessage(props, sender, receiver)}
                 />
             }
         </View>
@@ -259,17 +418,5 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: theme.COLORS.WHITE,
     },
-    toolbarContainer: {
-        backgroundColor: theme.COLORS.WHITE,
-    },
-    bottomComponentContainer: {
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    loadingContainer: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
 })
 

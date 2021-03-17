@@ -256,3 +256,366 @@ export default function helpMaterial() {
 //   "signal-2g", "signal-3g", "signal-4g", "signal-5g", "signal-cellular-1", "signal-cellular-2", "signal-cellular-3", "signal-cellular-outline", "signal-distance-variant", "signal-hspa", "signal-hspa-plus", "signal-off", "signal-variant", "signature", "signature-freehand", "signature-image", "signature-text", "silo", "silverware", "silverware-clean", "silverware-fork", "silverware-fork-knife", "silverware-spoon", "silverware-variant", "sim", "sim-alert", "sim-off", "sina-weibo", "sitemap", "skate", "skew-less", "skew-more", "skip-backward", "skip-backward-outline", "skip-forward", "skip-forward-outline", "skip-next", "skip-next-circle", "skip-next-circle-outline", "skip-next-outline", "skip-previous", "skip-previous-circle", "skip-previous-circle-outline", "skip-previous-outline", "skull", "skull-crossbones", "skull-crossbones-outline", "skull-outline", "skype", "skype-business", "slack", "slackware", "slash-forward", "slash-forward-box", "sleep", "sleep-off", "slope-downhill", "slope-uphill", "smog", "smoke-detector", "smoking", "smoking-off", "snapchat", "snowflake", "snowflake-alert", "snowflake-variant", "snowman", "soccer", "soccer-field", "sofa", "solar-panel", "solar-panel-large", "solar-power", "solid", "sort", "sort-alphabetical", "sort-ascending", "sort-descending", "sort-numeric", "sort-variant", "sort-variant-lock", "sort-variant-lock-open", "soundcloud", "source-branch", "source-commit", "source-commit-end", "source-commit-end-local", "source-commit-local", "source-commit-next-local", "source-commit-start", "source-commit-start-next-local", "source-fork", "source-merge", "source-pull", "source-repository", "source-repository-multiple", "soy-sauce", "spa", "spa-outline", "space-invaders", "spade", "speaker", "speaker-bluetooth", "speaker-multiple", "speaker-off", "speaker-wireless", "speedometer", "speedometer-medium", "speedometer-slow", "spellcheck", "spider-web", "spotify", "spotlight", "spotlight-beam", "spray", "spray-bottle", "sprout", "sprout-outline", "square", "square-edit-outline", "square-inc", "square-inc-cash", "square-medium", "square-medium-outline", "square-outline", "square-root", "square-root-box", "square-small", "squeegee", "ssh", "stack-exchange", "stack-overflow", "stadium", "stadium-variant", "stairs", "stamper", "standard-definition", "star", "star-box", "star-box-outline", "star-circle", "star-circle-outline", "star-face", "star-four-points", "star-four-points-outline", "star-half", "star-off", "star-outline", "star-three-points", "star-three-points-outline", "steam", "steam-box", "steering", "steering-off", "step-backward", "step-backward-2", "step-forward", "step-forward-2", "stethoscope", "sticker", "sticker-emoji", "stocking", "stop", "stop-circle", "stop-circle-outline", "store", "store-24-hour", "stove", "strava", "stretch-to-page", "stretch-to-page-outline", "subdirectory-arrow-left", "subdirectory-arrow-right", "subtitles", "subtitles-outline", "subway", "subway-alert-variant", "subway-variant", "summit", "sunglasses", "surround-sound", "surround-sound-2-0", "surround-sound-3-1", "surround-sound-5-1", "surround-sound-7-1", "svg", "swap-horizontal", "swap-horizontal-bold", "swap-horizontal-circle", "swap-horizontal-circle-outline", "swap-horizontal-variant", "swap-vertical", "swap-vertical-bold", "swap-vertical-circle", "swap-vertical-circle-outline", "swap-vertical-variant", "swim", "switch", "sword", "sword-cross", "symfony", "sync", "sync-alert", "sync-off", "tab", "tab-minus", "tab-plus", "tab-remove", "tab-unselected", "table", "table-border", "table-column", "table-column-plus-after", "table-column-plus-before", "table-column-remove", "table-column-width", "table-edit", "table-large", "table-large-plus", "table-large-remove", "table-merge-cells", "table-of-contents", "table-plus", "table-remove", "table-row", "table-row-height", "table-row-plus-after", "table-row-plus-before", "table-row-remove", "table-search", "table-settings", "table-tennis", "tablet", "tablet-android", "tablet-cellphone", "tablet-dashboard", "tablet-ipad", "taco", "tag", "tag-faces", "tag-heart", "tag-heart-outline", "tag-minus", "tag-multiple", "tag-outline", "tag-plus", "tag-remove", "tag-text-outline", "tank", "tanker-truck", "tape-measure", "target", "target-account", "target-variant", "taxi", "tea", "tea-outline", "teach", "teamviewer", "telegram", "telescope", "television", "television-box", "television-classic", "television-classic-off", "television-guide", "television-off", "television-pause", "television-play", "television-stop", "temperature-celsius", "temperature-fahrenheit", "temperature-kelvin", "tennis", "tennis-ball", "tent", "terrain", "test-tube", "test-tube-empty", "test-tube-off", "text", "text-shadow", "text-short", "text-subject", "text-to-speech", "text-to-speech-off", "textbox", "textbox-password", "texture", "texture-box", "theater", "theme-light-dark", "thermometer", "thermometer-alert", "thermometer-chevron-down", "thermometer-chevron-up", "thermometer-lines", "thermometer-minus", "thermometer-plus", "thermostat", "thermostat-box", "thought-bubble", "thought-bubble-outline", "thumb-down", "thumb-down-outline", "thumb-up", "thumb-up-outline", "thumbs-up-down", "ticket", "ticket-account", "ticket-confirmation", "ticket-outline", "ticket-percent", "tie", "tilde", "timelapse", "timeline", "timeline-alert", "timeline-alert-outline", "timeline-help", "timeline-help-outline", "timeline-outline", "timeline-plus", "timeline-plus-outline", "timeline-text", "timeline-text-outline", "timer", "timer-10", "timer-3", "timer-off", "timer-sand", "timer-sand-empty", "timer-sand-full", "timetable", "toaster-oven", "toggle-switch", "toggle-switch-off", "toggle-switch-off-outline", "toggle-switch-outline", "toilet", "toolbox", "toolbox-outline", "tooltip", "tooltip-account", "tooltip-edit", "tooltip-image", "tooltip-image-outline", "tooltip-outline", "tooltip-plus", "tooltip-plus-outline", "tooltip-text", "tooltip-text-outline", "tooth", "tooth-outline", "tor", "tortoise", "tournament", "tower-beach", "tower-fire", "towing", "track-light", "trackpad", "trackpad-lock", "tractor", "trademark", "traffic-light", "train", "train-car", "train-variant", "tram", "tram-side", "transcribe", "transcribe-close", "transfer-down", "transfer-left", "transfer-right", "transfer-up", "transit-connection", "transit-connection-variant", "transit-detour", "transit-transfer", "transition", "transition-masked", "translate", "translate-off", "transmission-tower", "trash-can", "trash-can-outline", "treasure-chest", "tree", "tree-outline", "trello", "trending-down", "trending-neutral", "trending-up", "triangle", "triangle-outline", "triforce", "trophy", "trophy-award", "trophy-broken", "trophy-outline", "trophy-variant", "trophy-variant-outline", "truck", "truck-check", "truck-delivery", "truck-fast", "truck-trailer", "tshirt-crew", "tshirt-crew-outline", "tshirt-v", "tshirt-v-outline", "tumble-dryer", "tumblr", "tumblr-box", "tumblr-reblog", "tune", "tune-vertical", "turnstile", "turnstile-outline", "turtle", "twitch", "twitter", "twitter-box", "twitter-circle", "twitter-retweet", "two-factor-authentication", "typewriter", "uber", "ubisoft", "ubuntu", "ultra-high-definition", "umbraco", "umbrella", "umbrella-closed", "umbrella-outline", "undo", "undo-variant", "unfold-less-horizontal", "unfold-less-vertical", "unfold-more-horizontal", "unfold-more-vertical", "ungroup", "unicode", "unity", "unreal", "untappd", "update", "upload", "upload-multiple", "upload-network", "upload-network-outline", "upload-outline", "usb", "van-passenger", "van-utility", "vanish", "variable", "vector-arrange-above", "vector-arrange-below", "vector-bezier", "vector-circle", "vector-circle-variant", "vector-combine", "vector-curve", "vector-difference", "vector-difference-ab", "vector-difference-ba", "vector-ellipse", "vector-intersection", "vector-line", "vector-link", "vector-point", "vector-polygon", "vector-polyline", "vector-radius", "vector-rectangle", "vector-selection", "vector-square", "vector-triangle", "vector-union", "venmo", "vhs", "vibrate", "vibrate-off", "video", "video-3d", "video-3d-variant", "video-4k-box", "video-account", "video-image", "video-input-antenna", "video-input-component", "video-input-hdmi", "video-input-scart", "video-input-svideo", "video-minus", "video-off", "video-off-outline", "video-outline", "video-plus", "video-stabilization", "video-switch", "video-vintage", "video-wireless", "video-wireless-outline", "view-agenda", "view-array", "view-carousel", "view-column", "view-comfy", "view-compact", "view-compact-outline", "view-dashboard", "view-dashboard-outline", "view-dashboard-variant", "view-day", "view-grid", "view-grid-plus", "view-headline", "view-list", "view-module", "view-parallel", "view-quilt", "view-sequential", "view-split-horizontal", "view-split-vertical", "view-stream", "view-week", "vimeo", "violin", "virtual-reality", "visual-studio", "visual-studio-code", "vk", "vk-box", "vk-circle", "vlc", "voice", "voice-off", "voicemail", "volleyball", "volume-high", "volume-low", "volume-medium", "volume-minus", "volume-mute", "volume-off", "volume-plus", "volume-variant-off", "vote", "vote-outline", "vpn", "vuejs", "vuetify", "walk", "wall", "wall-sconce", "wall-sconce-flat", "wall-sconce-variant", "wallet", "wallet-giftcard", "wallet-membership", "wallet-outline", "wallet-plus", "wallet-plus-outline", "wallet-travel", "wallpaper", "wan", "wardrobe", "wardrobe-outline", "warehouse", "washing-machine", "watch", "watch-export", "watch-export-variant", "watch-import", "watch-import-variant", "watch-variant", "watch-vibrate", "watch-vibrate-off", "water", "water-boiler", "water-off", "water-outline", "water-percent", "water-pump", "water-pump-off", "watermark", "wave", "waves", "waze", "weather-cloudy", "weather-cloudy-alert", "weather-cloudy-arrow-right",
 //   "weather-fog", "weather-hail", "weather-hazy", "weather-hurricane", "weather-lightning", "weather-lightning-rainy", "weather-night",
 //   "weather-night-partly-cloudy", "weather-partly-cloudy", "weather-partly-lightning", "weather-partly-rainy", "weather-partly-snowy", "weather-partly-snowy-rainy", "weather-pouring", "weather-rainy", "weather-snowy", "weather-snowy-heavy", "weather-snowy-rainy", "weather-sunny", "weather-sunny-alert", "weather-sunset", "weather-sunset-down", "weather-sunset-up", "weather-tornado", "weather-windy", "weather-windy-variant", "web", "web-box", "webcam", "webhook", "webpack", "wechat", "weight", "weight-gram", "weight-kilogram", "weight-pound", "whatsapp", "wheelchair-accessibility", "whistle", "white-balance-auto", "white-balance-incandescent", "white-balance-iridescent", "white-balance-sunny", "widgets", "wifi", "wifi-off", "wifi-star", "wifi-strength-1", "wifi-strength-1-alert", "wifi-strength-1-lock", "wifi-strength-2", "wifi-strength-2-alert", "wifi-strength-2-lock", "wifi-strength-3", "wifi-strength-3-alert", "wifi-strength-3-lock", "wifi-strength-4", "wifi-strength-4-alert", "wifi-strength-4-lock", "wifi-strength-alert-outline", "wifi-strength-lock-outline", "wifi-strength-off", "wifi-strength-off-outline", "wifi-strength-outline", "wii", "wiiu", "wikipedia", "wind-turbine", "window-close", "window-closed", "window-maximize", "window-minimize", "window-open", "window-restore", "windows", "windows-classic", "wiper", "wiper-wash", "wordpress", "worker", "wrap", "wrap-disabled", "wrench", "wrench-outline", "wunderlist", "xamarin", "xamarin-outline", "xaml", "xbox", "xbox-controller", "xbox-controller-battery-alert", "xbox-controller-battery-charging", "xbox-controller-battery-empty", "xbox-controller-battery-full", "xbox-controller-battery-low", "xbox-controller-battery-medium", "xbox-controller-battery-unknown", "xbox-controller-menu", "xbox-controller-off", "xbox-controller-view", "xda", "xing", "xing-box", "xing-circle", "xml", "xmpp", "yahoo", "yammer", "yeast", "yelp", "yin-yang", "youtube", "youtube-creator-studio", "youtube-gaming", "youtube-subscription", "youtube-tv", "z-wave", "zend", "zigbee", "zip-box", "zip-box-outline", "zip-disk", "zodiac-aquarius", "zodiac-aries", "zodiac-cancer", "zodiac-capricorn", "zodiac-gemini", "zodiac-leo", "zodiac-libra", "zodiac-pisces", "zodiac-sagittarius", "zodiac-scorpio", "zodiac-taurus", "zodiac-virgo", "blank"].
+
+
+// import React, { useState, useEffect, useRef } from 'react';
+// import { Alert, Platform, StyleSheet, View } from 'react-native'
+// import { GiftedChat } from 'react-native-gifted-chat';
+// import * as DocumentPicker from 'expo-document-picker';
+// import * as ImagePicker from 'expo-image-picker';
+// import * as Permissions from 'expo-permissions';
+// import Constants from 'expo-constants';
+// import * as FileSystem from 'expo-file-system';
+// import firebase from '../../utils/firebase';
+// import { EasyToast, Loading } from '../../components';
+// import theme from '../../constants/theme';
+// import 'firebase/firestore';
+// import moment from 'moment';
+// import * as Sharing from "expo-sharing";
+// import { renderAvatar, renderBubble, renderLoading, renderMessageImage, renderSend, renderSystemMessage, scrollToBottomComponent, renderActions, onLongPress } from '../../components/ChatStuff';
+// import { sendPushNotification } from '../../hooks/PushNotifications/sendPushNotification';
+// import * as MediaLibrary from 'expo-media-library';
+
+// export default function ChatScreen(props) {
+//     const { navigation } = props;
+//     const [sendLoading, setsendLoading] = useState(false);
+//     const [user, setUser] = useState({ _id: '', fullName: '', fcmToken: '' });
+//     const [lawyer, setLawyer] = useState({ _id: '', fullName: '', fcmToken: '' });
+//     const [isLoading, setisLoading] = useState(false);
+//     const [messages, setMessages] = useState([]);
+    // const toastRef = useRef();
+    // const successToastRef = useRef();
+//     const [  , setimgDownloadLoading] = useState(false);
+//     const [isLawyer, setisLawyer] = useState(false);
+
+//     useEffect(() => {
+//         if (props.route && props.route.params && props.route.params.user && props.route.params.lawyer) {
+//             props.navigation.setOptions({
+//                 headerTitle: props.route.params.lawyer.fullName
+//             })
+//             debugger
+//             setUser(props.route.params.user);
+//             setLawyer(props.route.params.lawyer);
+//             setisLawyer(props.route.params.isLawyer);
+//         }
+//         return () => {
+//         }
+//     }, []);
+
+//     useEffect(() => {
+//         if (messages.length > 0)
+//             setisLoading(false)
+//         return () => { }
+//     }, [messages]);
+//     // 4.2.1
+//     useEffect(() => {
+//         if (user._id !== '' && lawyer._id !== '') {
+//             setisLoading(true);
+//             try {
+//                 firebase
+//                     .database()
+//                     .ref('chats')
+//                     .child(user && user._id)
+//                     .child(lawyer && lawyer._id)
+//                     .on('value', (dataSnapshot) => {
+//                         let msgs = [];
+//                         dataSnapshot && dataSnapshot.forEach((child) => {
+//                             msgs.push({ ...child.val(), createdAt: JSON.parse(child.val().createdAt), key: child.key });
+//                         });
+//                         setMessages(msgs.reverse());
+//                         setisLoading(false);
+//                     })
+//             } catch (err) {
+//                 setisLoading(false);
+//                 console.log('Loading chat error:', err);
+//             }
+//         }
+//         return () => {
+//         }
+//     }, [user, lawyer])
+
+
+    // useEffect(() => {
+    //     getPermissionAsync();
+    // }, []);
+
+    // const getPermissionAsync = async () => {
+    //     if (Constants.platform.ios) {
+    //         const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    //         if (status !== 'granted') {
+    //             Alert.alert('Sorry', 'we need camera roll permissions to make this work!');
+    //         }
+    //     }
+    // };
+    // const pickDocument = async () => {
+    //     let result = await DocumentPicker.getDocumentAsync({
+    //         type: '*/*',
+    //         copyToCacheDirectory: true,
+    //         multiple: false,
+    //     });
+    //     if (result.type === 'success') {
+    //         let secure_url = '';
+    //         let uploaded = false;
+    //         let fileBase64 = await FileSystem.readAsStringAsync(result.uri, { encoding: 'base64' });
+    //         let data = {
+    //             "file": `data:image/jpg;base64,${fileBase64}`,
+    //             "upload_preset": "ml_default",
+    //         }
+    //         await fetch('https://api.cloudinary.com/v1_1/dsexrbwj1/image/upload', {
+    //             body: JSON.stringify(data),
+    //             headers: {
+    //                 'content-type': 'application/json'
+    //             },
+    //             method: 'POST',
+    //         }).then(async res => {
+    //             let data = await res.json()
+    //             secure_url = data.url;
+    //             uploaded = true
+    //         }).catch(err => {
+    //             toastRef && toastRef.current && toastRef.current.show('Message send failed, Please try again later.', 5000, () => { });
+    //             setsendLoading(false);
+    //         })
+    //         if (uploaded) {
+    //             try {
+    //                 setsendLoading(true);
+    //                 const formatedDate = moment(new Date(), "MM-DD-YYYY HH:mm:ss");
+    //                 await firebase
+    //                     .database()
+    //                     .ref('chats/' + user._id)
+    //                     .child(lawyer && lawyer._id)
+    //                     .push({
+    //                         _id: JSON.stringify((new Date()).valueOf()),
+    //                         createdAt: JSON.stringify(formatedDate._d),
+    //                         file: secure_url,
+    //                         sent: true,
+    //                         name: result.name,
+    //                         user: {
+    //                             _id: props.route && props.route.params && props.route.params.isLawyer ? lawyer._id : user._id,
+    //                             name: props.route && props.route.params && props.route.params.isLawyer ? lawyer.fullName : user.fullName,
+    //                         },
+    //                     })
+    //                 sendPushNotification(
+    //                     props.route && props.route.params && props.route.params.isLawyer ? user.fcmToken : lawyer.fcmToken,
+    //                     `New message from ${props.route && props.route.params && props.route.params.isLawyer ? lawyer.fullName : user.fullName}`,
+    //                     `File: ${result.name}`
+    //                 )
+    //                 setsendLoading(false);
+    //             } catch (err) {
+    //                 console.log('pickDocument err:', err)
+    //                 setsendLoading(false);
+    //                 toastRef && toastRef.current && toastRef.current.show('Message send failed, Please try again later.', 5000, () => { });
+    //             }
+    //         }
+    //         setsendLoading(false);
+    //     }
+    // }
+    // const takePhoto = async () => {
+    //     const { status: cameraPerm } = await Permissions.askAsync(Permissions.CAMERA);
+    //     const { status: cameraRollPerm } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    //     if (cameraPerm === 'granted' && cameraRollPerm === 'granted') {
+    //         let result = await ImagePicker.launchCameraAsync({
+    //             allowsEditing: true,
+    //             aspect: [4, 4],
+    //             mediaTypes: 'Images',
+    //             quality: 1,
+    //             base64: true
+    //         });
+    //         if (!result.cancelled) {
+    //             setsendLoading(true);
+    //             let secure_url = '';
+    //             let uploaded = false;
+    //             let data = {
+    //                 "file": `data:image/jpg;base64,${result.base64}`,
+    //                 "upload_preset": "ml_default",
+    //             }
+    //             await fetch('https://api.cloudinary.com/v1_1/dsexrbwj1/image/upload', {
+    //                 body: JSON.stringify(data),
+    //                 headers: {
+    //                     'content-type': 'application/json'
+    //                 },
+    //                 method: 'POST',
+    //             }).then(async res => {
+    //                 let data = await res.json()
+    //                 secure_url = data.url;
+    //                 uploaded = true
+    //             }).catch(err => {
+    //                 toastRef && toastRef.current && toastRef.current.show('Message send failed, Please try again later.', 5000, () => { });
+    //                 setsendLoading(false);
+    //             })
+    //             if (uploaded) {
+    //                 try {
+    //                     const formatedDate = moment(new Date(), "MM-DD-YYYY HH:mm:ss");
+    //                     const name = result.uri.split("/").reverse()[0];
+    //                     await firebase
+    //                         .database()
+    //                         .ref('chats/' + user._id)
+    //                         .child(lawyer && lawyer._id)
+    //                         .push({
+    //                             _id: JSON.stringify((new Date()).valueOf()),
+    //                             createdAt: JSON.stringify(formatedDate._d),
+    //                             image: secure_url,
+    //                             name: name,
+    //                             sent: true,
+    //                             user: {
+    //                                 _id: props.route && props.route.params && props.route.params.isLawyer ? lawyer._id : user._id,
+    //                                 name: props.route && props.route.params && props.route.params.isLawyer ? lawyer.fullName : user.fullName,
+    //                             },
+    //                         });
+    //                     sendPushNotification(
+    //                         isLawyer ? user.fcmToken : lawyer.fcmToken,
+    //                         `New message from ${isLawyer ? lawyer.fullName : user.fullName}`,
+    //                         `Send you a photo: ${name}`
+    //                     );
+    //                     setsendLoading(false);
+    //                 } catch (err) {
+    //                     setsendLoading(false);
+    //                     toastRef && toastRef.current && toastRef.current.show('Message send failed, Please try again later.', 5000, () => { });
+    //                     console.log('snd msg err:', err);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // };
+//     async function handleSend(msg) {
+//         setsendLoading(true);
+//         try {
+//             await firebase
+//                 .database()
+//                 .ref('chats/' + user._id)
+//                 .child(lawyer && lawyer._id)
+//                 .push({
+//                     _id: msg[0]._id,
+//                     createdAt: JSON.stringify(msg[0].createdAt),
+//                     text: msg[0].text,
+//                     sent: true,
+//                     user: {
+//                         _id: props.route && props.route.params && props.route.params.isLawyer ? lawyer._id : user._id,
+//                         name: props.route && props.route.params && props.route.params.isLawyer ? lawyer.fullName : user.fullName,
+//                     },
+//                 })
+//             setsendLoading(false);
+//             sendPushNotification(
+//                 isLawyer ? user.fcmToken : lawyer.fcmToken,
+//                 `New message from ${isLawyer ? lawyer.fullName : user.fullName}`,
+//                 msg[0].text
+//             )
+//         } catch (err) {
+//             setsendLoading(false);
+//             toastRef && toastRef.current && toastRef.current.show('Message send failed, Please try again later.', 5000, () => { });
+//             console.log('snd msg err:', err);
+//         }
+//     }
+
+    // async function deleteMessage(message) {
+    //     let userRef = firebase.database()
+    //         .ref('chats/' + user._id)
+    //         .child(lawyer && lawyer._id)
+    //         .child(message.key)
+    //     userRef.remove();
+    // }
+
+    // const downloadImage = async message => {
+    //     setimgDownloadLoading(true);
+    //     FileSystem.downloadAsync(
+    //         message.image,
+    //         FileSystem.documentDirectory + message.name
+    //     ).then(({ uri }) => {
+    //         MediaLibrary.createAssetAsync(uri).then(asset => {
+    //             MediaLibrary.createAlbumAsync('OLHS', asset)
+    //                 .then(() => {
+    //                     setimgDownloadLoading(false);
+    //                     successToastRef && successToastRef.current && successToastRef.current.show('Image downloaded successfully.', 5000, () => { });
+    //                 })
+    //                 .catch(error => {
+    //                     console.error(error);
+    //                     toastRef && toastRef.current && toastRef.current.show('Image download failed, Please try again later.', 5000, () => { });
+    //                 });
+    //         });
+    //     }).catch(error => {
+    //         setimgDownloadLoading(false);
+    //         console.error(error);
+    //         toastRef && toastRef.current && toastRef.current.show('Image download failed, Please try again later.', 5000, () => { });
+    //     });
+    // }
+
+    // const downloadFile = async message => {
+    //     try {
+    //         setimgDownloadLoading(true);
+    //         FileSystem.downloadAsync(
+    //             message.file,
+    //             FileSystem.documentDirectory + message.name
+    //         ).then(({ uri }) => {
+    //             MediaLibrary.createAssetAsync(uri).then(asset => {
+    //                 MediaLibrary.createAlbumAsync('OLHS', asset)
+    //                     .then(() => {
+    //                         setimgDownloadLoading(false);
+    //                         successToastRef && successToastRef.current && successToastRef.current.show('Image downloaded successfully.', 5000, () => { });
+    //                     })
+    //                     .catch(error => {
+    //                         console.error(error);
+    //                         toastRef && toastRef.current && toastRef.current.show('Image download failed, Please try again later.', 5000, () => { });
+    //                     });
+    //             });
+    //         }).catch(error => {
+    //             setimgDownloadLoading(false);
+    //             console.error(error);
+    //             toastRef && toastRef.current && toastRef.current.show('File download failed, Please try again later.', 5000, () => { });
+    //         });
+    //     } catch (err) {
+    //     }
+    // }
+
+//     return (
+//         <View style={styles.container}>
+            // <EasyToast
+            //     toastRef={toastRef}
+            //     type={'err'}
+            //     position={'top'}
+            // />
+            // <EasyToast
+            //     toastRef={successToastRef}
+            //     type={'success'}
+            //     position={'top'}
+            // />
+//             {isLoading ?
+//                 <Loading />
+//                 :
+//                 <GiftedChat
+//                     messages={messages}
+//                     user={{
+//                         _id: props.route && props.route.params && props.route.params.isLawyer ? lawyer._id : user._id,
+//                         name: props.route && props.route.params && props.route.params.isLawyer ? lawyer.fullName : user.fullName,
+//                     }}
+//                     renderMessageImage={(props) => renderMessageImage(props, user, isLawyer)}
+//                     onLongPress={(context, message) => onLongPress(context, message, deleteMessage, downloadFile, downloadImage)}
+//                     maxInputLength={1000}
+//                     renderAvatar={(props) => renderAvatar(props, user, lawyer)}
+//                     onSend={handleSend}
+//                     renderSend={(props) => renderSend(props, sendLoading)}
+//                     renderActions={() => renderActions(pickDocument, takePhoto)}
+//                     renderLoading={renderLoading}
+//                     renderBubble={renderBubble}
+//                     isLoadingEarlier={true}
+//                     renderLoading={() => <Loading />}
+//                     scrollToBottomComponent={scrollToBottomComponent}
+//                     renderCustomView={(props) => renderSystemMessage(props, user, isLawyer)}
+//                 />
+//             }
+//         </View>
+//     )
+// }
+// const styles = StyleSheet.create({
+//     container: {
+//         flex: 1,
+//         backgroundColor: theme.COLORS.WHITE,
+//     },
+//     toolbarContainer: {
+//         backgroundColor: theme.COLORS.WHITE,
+//     },
+//     loadingContainer: {
+//         flex: 1,
+//         alignItems: 'center',
+//         justifyContent: 'center'
+//     }
+// })
+
