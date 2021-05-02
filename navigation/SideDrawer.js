@@ -6,12 +6,16 @@ import HomeStack from './Stack/HomeStack';
 import theme from '../constants/theme';
 import CustomSidebarMenu from './CustomSidebarMenu';
 import SettingsStack from './Stack/SettingsStack';
-import { AntDesign, Feather, Ionicons } from '@expo/vector-icons';
+import { AntDesign, Feather, FontAwesome, Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import ChatStack from './Stack/ChatStack';
+import HireLawyerStack from './Stack/HireLawyerStack';
+import CaseRequestStack from './Stack/CaseRequestStack';
+import AssignedCasesStack from './Stack/AssignedCasesStack';
+import MyCasesStack from './Stack/MyCasesStack';
 
 const Drawer = createDrawerNavigator();
 const SideDrawer = props => {
-  const { isLogged } = props;
+  const { isLogged, user } = props;
 
   return (
     <Drawer.Navigator
@@ -38,6 +42,73 @@ const SideDrawer = props => {
       >
         {(prop) => <HomeStack {...prop}{...props} />}
       </Drawer.Screen>
+      {isLogged && user ?
+        user.role === 'customer' ?
+          <>
+            <Drawer.Screen
+              name="HireLawyer"
+              options={{
+                title: 'Hire a Lawyer',
+                drawerIcon: ({ focused, size }) => (
+                  <AntDesign
+                    name="pluscircleo"
+                    size={23}
+                    color={focused ? theme.COLORS.PRIMARY : theme.COLORS.GRAY}
+                  />
+                ),
+              }} >
+              {(prop) => <HireLawyerStack {...props}{...prop} />}
+            </Drawer.Screen>
+            <Drawer.Screen
+              name="MyCases"
+              options={{
+                title: 'My Cases',
+                drawerIcon: ({ focused, size }) => (
+                  <MaterialIcons
+                    name="assignment"
+                    size={23}
+                    color={focused ? theme.COLORS.PRIMARY : theme.COLORS.GRAY}
+                  />
+                ),
+              }} >
+              {(prop) => <MyCasesStack {...props}{...prop} />}
+            </Drawer.Screen>
+          </>
+          :
+          <>
+            <Drawer.Screen
+              name="CaseRequest"
+              options={{
+                title: 'Case Request',
+                drawerIcon: ({ focused, size }) => (
+                  <MaterialIcons
+                    name="assignment"
+                    size={23}
+                    color={focused ? theme.COLORS.PRIMARY : theme.COLORS.GRAY}
+                  />
+                ),
+              }} >
+              {(prop) => <CaseRequestStack {...props}{...prop} />}
+            </Drawer.Screen>
+
+            <Drawer.Screen
+              name="AssignedCases"
+              options={{
+                title: 'Assigned Cases',
+                drawerIcon: ({ focused, size }) => (
+                  <MaterialIcons
+                    name="assignment-turned-in"
+                    size={23}
+                    color={focused ? theme.COLORS.PRIMARY : theme.COLORS.GRAY}
+                  />
+                ),
+              }} >
+              {(prop) => <AssignedCasesStack {...props}{...prop} />}
+            </Drawer.Screen>
+          </>
+        :
+        null
+      }
       {isLogged &&
         <>
           <Drawer.Screen

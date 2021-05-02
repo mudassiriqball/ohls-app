@@ -34,7 +34,7 @@ const CustomSidebarMenu = (props) => {
     <View style={styles.container}>
       <View style={[styles.avatarContainer, isLogged && { flexDirection: 'column' }]}>
         <Image
-          source={!isLogged || user.avatar === '' ?
+          source={!isLogged || (user && user.avatar && user.avatar === '') ?
             require('../assets/images/avatar.jpg')
             :
             { uri: user.avatar }
@@ -65,7 +65,6 @@ const CustomSidebarMenu = (props) => {
         <DrawerItem
           label={'Version ' + Constants.manifest.version}
           onPress={() => logout()}
-        // icon={({ focused, color, size }) => <AntDesign color={theme.COLORS.WHITE} size={20} name={'logout'} />}
         />
       </DrawerContentScrollView>
     </View>
