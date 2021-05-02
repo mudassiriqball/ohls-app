@@ -1,9 +1,17 @@
-# starter-drawer-app-react-native
-This app uses drwaer navigation.
+# Online Lawyer Hiring System
+App apk link: https://1drv.ms/u/s!AuxPil5kslEJk2EvBKC3RJd9-Dm5?e=pgaVCi
 
-Features:
+# Technologies Used:
+1) React Native (Expo Cli)
+2) Next Js (Admin dashboard)
+3) Node js (Express) (Api)
+4) MongoDb
+5) Cloudinary (Images STorage)
+6) Firebase Cloud Messaging
+7) Firebase Firestore
+
+# Features:
 1) Social Logins (Google, Fb)
-2) Upload avatar
 3) Login/Regiter using email
-4) Update Profile
-5) Logout
+4) Live Chat with ability to share images, files(pdf, docs, etc)
+5) Push Notifications
