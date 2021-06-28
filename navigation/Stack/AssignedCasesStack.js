@@ -12,12 +12,12 @@ export default function AssignedCasesStack(props) {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="CaseRequest"
+        name="AssignedCases"
         options={{
           header: ({ navigation, scene }) => (
             <Header
               back
-              title={"Case Request"}
+              title={"Assigned Cases"}
               navigation={navigation}
               scene={scene}
             />

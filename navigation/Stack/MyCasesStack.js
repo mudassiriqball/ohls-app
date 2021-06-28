@@ -11,7 +11,7 @@ export default function MyCasesStack(props) {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="CaseRequest"
+        name="MyCases"
         options={{
           header: ({ navigation, scene }) => (
             <Header

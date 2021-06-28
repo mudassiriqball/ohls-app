@@ -100,6 +100,7 @@ const MyCases = (props) => {
     return (
       <View style={{ padding: 5, width: '100%' }}>
         <CaseCard
+          navigation={props.navigation}
           item={item}
           handleAcceptOffer={(req_id, assigned_to) => handleAcceptOffer(item, req_id, assigned_to)}
           handleDeclineOffer={(req_id) => handleDeclineOffer(item, req_id)}

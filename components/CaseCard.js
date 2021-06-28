@@ -88,7 +88,7 @@ const CaseCard = (props) => {
         }
         <Item label={'Created at'} value={item && item.entry_date.substring(0, 10)} />
 
-        {from === 'MyCases' &&
+        {from === 'MyCases' && item && !item.is_deleted && !item.assigned ?
           <View style={styles.requestsContainer}>
             {requests && requests.map((element, index) => {
               return (
@@ -134,6 +134,15 @@ const CaseCard = (props) => {
                 </View>
               )
             })}
+          </View>
+          : from === 'MyCases' && item && item.is_deleted &&
+          <View style={styles.requestsContainer}>
+            <Button
+              title={'Add Review'}
+              uppercase={false}
+              small
+              onPress={() => props.navigation.navigate('ViewLawyerProfile', { lawyer: assignedTo })}
+            />
           </View>
         }
 
