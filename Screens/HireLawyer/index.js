@@ -11,6 +11,10 @@ import urls from '../../utils/urls';
 
 const HireLawyer = props => {
   const { token, user } = props;
+  const [name, setName] = useState('');
+  const [nameErr, setNameErr] = useState('');
+  const [city, setCity] = useState('');
+  const [cityErr, setCityErr] = useState('');
   const [type, setType] = useState('');
   const [typeError, setTypeError] = useState('');
   const [details, setDetails] = useState('');
@@ -24,12 +28,18 @@ const HireLawyer = props => {
 
   const handlePostCase = async () => {
     let _token = await getBearerTokenFromStorage();
-    if (type === '' || details === '') {
+    if (type === '' || details === '' || name === '' || city === '') {
       if (type === '') {
         setTypeError('Required*');
       }
       if (details === '') {
         setDetailsError('Required*');
+      }
+      if (name === '') {
+        setNameErr('Required*');
+      }
+      if (city === '') {
+        setCityErr('Required*');
       }
     } else {
       setLoading(true);
@@ -42,6 +52,8 @@ const HireLawyer = props => {
         data: {
           type,
           details,
+          name,
+          city,
         }
       }).then(res => {
         setToastType('success');
@@ -52,6 +64,10 @@ const HireLawyer = props => {
         setTypeError('');
         setDetails('');
         setDetailsError('');
+        setName('');
+        setNameErr('');
+        setCity('');
+        setCityErr('');
       }).catch(err => {
         console.log('handlePostCase err:', err);
         setToastType('err');
@@ -70,7 +86,7 @@ const HireLawyer = props => {
         position={'top'}
       />
       {/* Case Type */}
-      <Text style={{ marginBottom: 5 }}>{'Case Type'}</Text>
+      <Text style={{ marginBottom: 5, color: typeError !== '' ? theme.COLORS.ERROR : theme.COLORS.TEXT }}>{'Case Type'}</Text>
       <View style={[Platform.OS === "ios" ? STYLES.iosPickerContainer : STYLES.androidPickerContainer,
       { borderColor: typeError !== '' ? theme.COLORS.ERROR : theme.COLORS.GRAY, borderWidth: typeError !== '' ? 2 : 1 }
       ]}>
@@ -90,12 +106,26 @@ const HireLawyer = props => {
           {renderError(typeError)}
         </View>
       }
+      <Input
+        label={'Full Name'}
+        placeholder={'Enter your full name'}
+        value={name}
+        onChangeText={(val) => { setName(val), setNameErr('') }}
+        error={nameErr}
+      />
+      <Input
+        label={'City/District'}
+        placeholder={'Enter your city & district'}
+        value={city}
+        onChangeText={(val) => { setCity(val), setCityErr('') }}
+        error={cityErr}
+      />
       {/* Details */}
       <Text style={{ marginBottom: 5, marginTop: 10 }}>{'Case Details'}</Text>
       <TextInput
         value={details}
         multiline={true}
-        numberOfLines={30}
+        numberOfLines={10}
         style={{ borderColor: detailsError ? theme.COLORS.ERROR : theme.COLORS.GRAY, borderWidth: 1, padding: 10, borderRadius: 3, backgroundColor: 'white' }}
         textAlignVertical='top'
         placeholder={'Type your case details here.'}

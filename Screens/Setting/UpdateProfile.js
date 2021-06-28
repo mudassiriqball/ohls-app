@@ -102,7 +102,7 @@ export default function UpdateProfile(props) {
           getUser();
         });
       }).catch(err => {
-        console.log('err:', err)
+        console.log('handleUpdate profile err:', err)
         setIsLoading(false);
         setToastType('err');
         toastRef && toastRef.current && toastRef.current.show('Something went wrong, Please try again later!', 1000, () => {});

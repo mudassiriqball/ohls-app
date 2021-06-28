@@ -5,6 +5,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
 import { CaseCard, EasyToast, Loading, NoDataFound } from '../../components';
 import getCustomerCases from '../../hooks/getCustomerCases';
+import sendPushNotification from '../../hooks/PushNotifications/sendPushNotification';
 import { getBearerTokenFromStorage } from '../../utils/auth';
 import urls from '../../utils/urls';
 
@@ -50,16 +51,24 @@ const MyCases = (props) => {
       },
       params: { req_id, assigned_to }
     }).then(res => {
-      setLoading(false);
-      setReload(reload + 1);
       setToastType('success');
       toastRef && toastRef.current && toastRef.current.show('Request processed successfully', 2500, () => {
+        setLoading(false);
+        setReload(reload + 1);
       });
+      sendPushNotification(
+        _token,
+        assigned_to,
+        `Case Request Accepted`,
+        `Your case request accepted.`,
+        user
+      );
     }).catch(err => {
-      console.log('err:', err)
-      setLoading(false);
+      console.log('handleAcceptOffer err:', err)
       setToastType('err');
-      toastRef && toastRef.current && toastRef.current.show('Something went wrong, Please try again later!', 2500, () => {});
+      toastRef && toastRef.current && toastRef.current.show('Something went wrong, Please try again later!', 2500, () => {
+        setLoading(false);
+      });
     })
   }
   const handleDeclineOffer = async (item, req_id) => {
@@ -73,16 +82,17 @@ const MyCases = (props) => {
       },
       params: { req_id }
     }).then(res => {
-      setReload(reload + 1);
-      setLoading(false);
       setToastType('success');
       toastRef && toastRef.current && toastRef.current.show('Request processed successfully', 2500, () => {
+        setLoading(false);
+        setReload(reload + 1);
       });
     }).catch(err => {
-      console.log('err:', err)
-      setLoading(false);
+      console.log('handleDeclineOffer err:', err)
       setToastType('err');
-      toastRef && toastRef.current && toastRef.current.show('Something went wrong, Please try again later!', 2500, () => {});
+      toastRef && toastRef.current && toastRef.current.show('Something went wrong, Please try again later!', 2500, () => {
+        setLoading(false);
+      });
     })
   }
 

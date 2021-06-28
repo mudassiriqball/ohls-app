@@ -62,7 +62,7 @@ export default function Login(props) {
         saveTokenToStorage(res.data.token, navigation, getUser);
       }).catch(err => {
         setIsLoading(false);
-        console.log('err', err);
+        console.log('handleLogin err', err);
         try {
           if (err.response.status === 400 || err.response.status === 401) {
             setErrors({ ...errors, general: 'Invalid username or password' });
@@ -71,7 +71,7 @@ export default function Login(props) {
             toastRef && toastRef.current && toastRef.current.show('Something went wrong, Please try again later!', 1000, () => {});
           }
         } catch (err) {
-          console.log('err', err);
+          console.log('handleLogin 1 err', err);
           setToastType('err');
           toastRef && toastRef.current && toastRef.current.show('Something went wrong, Please try again later!', 1000, () => {});
         }

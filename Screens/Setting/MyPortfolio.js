@@ -41,7 +41,7 @@ export default function MyPortfolio(props) {
         getUser();
       });
     }).catch(err => {
-      console.log('err:', err)
+      console.log('handleUpdate err:', err)
       setIsLoading(false);
       setToastType('err');
       toastRef && toastRef.current && toastRef.current.show('Something went wrong, Please try again later!', 500, () => {});

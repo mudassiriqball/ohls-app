@@ -5,12 +5,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
 import { CaseCard, EasyToast, Loading, NoDataFound } from '../../components';
 import getAllCases from '../../hooks/getAllCases';
+import sendPushNotification from '../../hooks/PushNotifications/sendPushNotification';
 import { getBearerTokenFromStorage } from '../../utils/auth';
 import urls from '../../utils/urls';
 
 const CaseRequest = (props) => {
   const { user } = props;
-  const [reload, setReload] = useState();
+  const [reload, setReload] = useState(0);
   const { IS_LOADING, DATA } = getAllCases(false, reload);
   const [loading, setLoading] = useState();
 
@@ -40,6 +41,7 @@ const CaseRequest = (props) => {
   }
 
   const handleSendOffer = async (item) => {
+    setLoading(true);
     let _token = await getBearerTokenFromStorage();
     await axios({
       method: 'PUT',
@@ -49,16 +51,24 @@ const CaseRequest = (props) => {
       },
       data: { lawyer_id: user._id, entry_date: new Date() }
     }).then(res => {
-      setLoading(false);
-      setReload(reload + 1);
       setToastType('success');
-      toastRef && toastRef.current && toastRef.current.show('Portfolio Updated Successfully', 2500, () => {
+      toastRef && toastRef.current && toastRef.current.show('Request Processed Successfully', 2500, () => {
+        setLoading(false);
+        setReload(reload + 1);
       });
+      sendPushNotification(
+        _token,
+        item.user_id,
+        `Case Request Received`,
+        `New request from lawyer received for your case.`,
+        user
+      );
     }).catch(err => {
-      console.log('err:', err)
-      setLoading(false);
+      console.log('handleSendOffer err:', err)
       setToastType('err');
-      toastRef && toastRef.current && toastRef.current.show('Something went wrong, Please try again later!', 2500, () => {});
+      toastRef && toastRef.current && toastRef.current.show('Something went wrong, Please try again later!', 2500, () => {
+        setLoading(false);
+      });
     })
   }
 

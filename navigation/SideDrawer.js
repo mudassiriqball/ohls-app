@@ -1,7 +1,6 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import AboutUs from '../Screens/AboutUs';
 import HomeStack from './Stack/HomeStack';
 import theme from '../constants/theme';
 import CustomSidebarMenu from './CustomSidebarMenu';
@@ -12,6 +11,7 @@ import HireLawyerStack from './Stack/HireLawyerStack';
 import CaseRequestStack from './Stack/CaseRequestStack';
 import AssignedCasesStack from './Stack/AssignedCasesStack';
 import MyCasesStack from './Stack/MyCasesStack';
+import AboutUsStack from './Stack/AboutUsStack';
 
 const Drawer = createDrawerNavigator();
 const SideDrawer = props => {
@@ -143,9 +143,8 @@ const SideDrawer = props => {
       }
       <Drawer.Screen
         name="AboutUs"
-        component={AboutUs}
         options={{
-          title: 'About us',
+          title: 'AboutUs',
           drawerIcon: ({ focused, size }) => (
             <AntDesign
               name="infocirlceo"
@@ -153,8 +152,9 @@ const SideDrawer = props => {
               color={focused ? theme.COLORS.PRIMARY : theme.COLORS.GRAY}
             />
           ),
-        }}
-      />
+        }} >
+        {(prop) => <AboutUsStack {...props}{...prop} />}
+      </Drawer.Screen>
     </Drawer.Navigator>
   )
 }

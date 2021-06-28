@@ -33,14 +33,16 @@ const CustomSidebarMenu = (props) => {
   return (
     <View style={styles.container}>
       <View style={[styles.avatarContainer, isLogged && { flexDirection: 'column' }]}>
-        <Image
-          source={!isLogged || (user && user.avatar && user.avatar === '') ?
-            require('../assets/images/avatar.jpg')
-            :
-            { uri: user.avatar }
-          }
-          style={styles.avatar}
-        />
+        {isLogged && user && user.avatar ?
+          <Image
+            source={{ uri: user.avatar }}
+            style={styles.avatar}
+          /> :
+          <Image
+            source={require('../assets/images/avatar.jpg')}
+            style={styles.avatar}
+          />
+        }
         {isLogged ?
           <Text style={{ color: theme.COLORS.WHITE }}>{user.fullName}</Text>
           :

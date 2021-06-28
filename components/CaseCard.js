@@ -4,12 +4,14 @@ import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { Button } from '.';
 import theme from '../constants/theme';
 import urls from '../utils/urls';
+import { AntDesign } from '@expo/vector-icons';
 
 const CaseCard = (props) => {
   const { item, onPress, loading, user, from, handleAcceptOffer, handleDeclineOffer, handleEndCase } = props;
   const [isAlreadyRequested, setIsAlreadyRequested] = useState(false);
   const [requests, setRequests] = useState([]);
   const [assignedTo, setAssignedTo] = useState(null);
+  const [showPortfolio, setShowPortfolio] = useState(false);
 
   useEffect(() => {
     from !== 'MyCases' && item && item.requests && item.requests.forEach(element => {
@@ -18,30 +20,26 @@ const CaseCard = (props) => {
       }
     });
     if (from === 'MyCases') {
+      setRequests([]);
+      setAssignedTo(null);
       if (item && item.assigned) {
         getAssignedTo(item.assigned_to);
       }
-      item && item.requests && item.requests.forEach((element) => {
-        getUserById(element);
+      item && item.requests && item.requests.forEach(async (element) => {
+        await axios({
+          method: 'GET',
+          url: urls.USER_BY_ID + element.lawyer_id,
+        }).then(res => {
+          setRequests(prev => {
+            return [...new Set([...prev, { ...element, user: res.data.data }])]
+          })
+        }).catch(err => {
+          console.log('getUserById in card case error:', err);
+        });
       })
     }
   }, [item]);
 
-  useEffect(() => {
-    setRequests([]);
-    setAssignedTo(null);
-  }, [item]);
-
-  const getUserById = async (element) => {
-    await axios({
-      method: 'GET',
-      url: urls.USER_BY_ID + element.lawyer_id,
-    }).then(res => {
-      setRequests([...requests, { ...element, user: res.data.data }]);
-    }).catch(err => {
-      console.log('getUserById in card case error:', err);
-    });
-  }
 
   const getAssignedTo = async (id) => {
     await axios({
@@ -77,6 +75,8 @@ const CaseCard = (props) => {
     <View style={styles.container}>
       <View style={{ padding: 0, margin: 0 }}>
         <Item label={'Case Type'} value={item && item.type} />
+        {item && item.name && <Item label={'Name'} value={item.name} />}
+        {item && item.city && <Item label={'City/District'} value={item.city} />}
         <Item label={'Case Details'} value={item && item.details} />
         <Item label={'Assigned'} value={item && item.assigned ? 'True' : 'False'} />
 
@@ -92,11 +92,27 @@ const CaseCard = (props) => {
           <View style={styles.requestsContainer}>
             {requests && requests.map((element, index) => {
               return (
-                <View style={styles.requestItem}>
+                <View key={index} style={styles.requestItem}>
                   <View>
                     <Item label={'Lawyer Name'} value={element.user.fullName} />
                     <Item label={'Created at'} value={element.entry_date.substring(0, 10)} />
                   </View>
+                  {/* Portfolio */}
+                  <TouchableOpacity style={styles.portfolio} onPress={() => setShowPortfolio(!showPortfolio)}>
+                    <Text>Show Portfolio</Text>
+                    {showPortfolio ?
+                      <AntDesign name="up" size={20} color={theme.COLORS.TEXT} />
+                      :
+                      <AntDesign name="down" size={20} color={theme.COLORS.TEXT} />
+                    }
+                  </TouchableOpacity>
+                  {showPortfolio &&
+                    <View style={styles.portfolioTextView}>
+                      <Text>
+                        {element.user && element.user.portfolio ? element.user.portfolio : 'Not Available'}
+                      </Text>
+                    </View>
+                  }
                   <View key={index} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Button
                       title={'Accept Offer'}
@@ -161,6 +177,22 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 4, height: 4 },
     elevation: 3,
     shadowRadius: 3
+  },
+  portfolio: {
+    flexDirection: 'row',
+    padding: 10,
+    marginVertical: 10,
+    borderColor: theme.COLORS.BORDER,
+    borderWidth: 1,
+    borderRadius: 5,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  portfolioTextView: {
+    padding: 10,
+    borderColor: theme.COLORS.BORDER,
+    borderWidth: 1,
+    borderRadius: 5,
   },
   text: {
     color: theme.COLORS.TEXT,

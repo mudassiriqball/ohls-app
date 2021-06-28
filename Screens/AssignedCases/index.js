@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
 import { CaseCard, EasyToast, Loading, NoDataFound } from '../../components';
 import getLawyerCases from '../../hooks/getLawyerCases';
+import sendPushNotification from '../../hooks/PushNotifications/sendPushNotification';
 import { getBearerTokenFromStorage } from '../../utils/auth';
 import urls from '../../utils/urls';
 
@@ -59,8 +60,15 @@ const AssignedCases = (props) => {
       setToastType('success');
       toastRef && toastRef.current && toastRef.current.show('Portfolio Updated Successfully', 2500, () => {
       });
+      sendPushNotification(
+        _token,
+        item.user_id,
+        `Case Closed Notification`,
+        `Your case is dismissed by lawyer. Please rate your expedience with lawyer`,
+        user
+      );
     }).catch(err => {
-      console.log('err:', err)
+      console.log('handleEndCase err:', err)
       setLoading(false);
       setToastType('err');
       toastRef && toastRef.current && toastRef.current.show('Something went wrong, Please try again later!', 2500, () => {});

@@ -232,9 +232,9 @@ export default function ChatSCreen(props) {
     if (cameraPerm === 'granted' && cameraRollPerm === 'granted') {
       let result = await ImagePicker.launchCameraAsync({
         allowsEditing: true,
-        aspect: [4, 4],
-        mediaTypes: 'Images',
-        quality: 1,
+        aspect: [4, 3],
+        // mediaTypes: 'Images',
+        // quality: 0,
         base64: true
       });
       if (!result.cancelled) {
@@ -254,8 +254,10 @@ export default function ChatSCreen(props) {
         }).then(async res => {
           let data = await res.json()
           secure_url = data.url;
+          debugger
           uploaded = true
         }).catch(err => {
+          debugger
           toastRef && toastRef.current && toastRef.current.show('Message send failed, Please try again later.', 2000, () => {});
           setsendLoading(false);
         })
@@ -340,13 +342,13 @@ export default function ChatSCreen(props) {
             successToastRef && successToastRef.current && successToastRef.current.show('Image downloaded successfully.', 2000, () => {});
           })
           .catch(error => {
-            console.error(error);
+            console.log('downloadImage 0:', error);
             toastRef && toastRef.current && toastRef.current.show('Image download failed, Please try again later.', 2000, () => {});
           });
       });
     }).catch(error => {
       setimgDownloadLoading(false);
-      console.error(error);
+      console.log('downloadImage 1:', error);
       toastRef && toastRef.current && toastRef.current.show('Image download failed, Please try again later.', 2000, () => {});
     });
   }

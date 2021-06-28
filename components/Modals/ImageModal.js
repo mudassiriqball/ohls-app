@@ -64,8 +64,8 @@ const ImageModal = props => {
       let result = await ImagePicker.launchCameraAsync({
         allowsEditing: true,
         aspect: [4, 4],
-        mediaTypes: 'Images',
-        quality: 1,
+        // mediaTypes: 'Images',
+        // quality: 0,
         base64: true
       });
       if (!result.cancelled) {
@@ -116,7 +116,7 @@ const ImageModal = props => {
         });
       }).catch((err) => {
         setIsLoading(false);
-        console.log('error:', err);
+        console.log('handleImgUpload error:', err);
         setToastType('err');
         toastRef && toastRef.current && toastRef.current.show('Something went wrong, Please try again later!', 1000, () => {});
       });

@@ -118,7 +118,7 @@ export default function SocialLogin(props) {
       }
     } catch (err) {
       setIsLoading(false);
-      console.log('err:', err)
+      console.log('handleFacebookLogin err:', err)
       setToastType('err');
       toastRef && toastRef.current && toastRef.current.show('Something went wrong, Please try again later!', 1000, () => {});
     }
